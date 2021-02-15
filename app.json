@@ -40,7 +40,8 @@
     "environments": {
       "test": {
         "scripts": {
-          "test": "bundle exec rake test"
+          "test": "bundle exec rake test",
+          "start": "index.js"
         }
       }
     }
