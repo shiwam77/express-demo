@@ -129,7 +129,9 @@ const DB = process.env.DATABASE.replace(
       
 
 
-
+      app.get('/',(req, res, next) => {
+        res.status(200).send("hello world");
+      });
 
 
 
