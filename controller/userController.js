@@ -1,5 +1,5 @@
 const multer = require('multer');
-const sharp = require('sharp');
+//const sharp = require('sharp');
 
 const factory = require('../controller/handleFactory');
 const jwt = require('jsonwebtoken');
