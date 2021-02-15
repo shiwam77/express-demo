@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": " nodemon index.js",
+    "heroku-prebuild": "npm install --only=dev"
   },
   "keywords": [],
   "author": "shiwam karn",
@@ -16,7 +17,6 @@
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "docker": "^1.0.0",
     "dotenv": "^8.2.0",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
@@ -36,9 +36,12 @@
     "path": "^0.12.7",
     "pug": "^3.0.0",
     "serve-favicon": "^2.5.0",
+    "sharp": "^0.27.1",
     "store": "^2.0.12",
     "validator": "^13.5.2",
-    "xss-clean": "^0.1.1",
-    "yarn": "^1.22.10"
+    "xss-clean": "^0.1.1"
+  },
+  "engines": {
+    "node": "12.18.2"
   }
 }
