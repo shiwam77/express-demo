@@ -9,7 +9,7 @@ exports.deleteOne = Model =>
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
     }
-
+   console.log(doc);
     res.status(204).json({
       status: 'success',
       message: "Documented is deleted"
@@ -26,6 +26,7 @@ exports.updateOne = Model =>
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
     }
+    console.log(doc);
 
     res.status(200).json({
       status: 'success',
@@ -38,7 +39,7 @@ exports.updateOne = Model =>
 exports.createOne = Model =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.create(req.body);
-
+    console.log(doc);
     res.status(201).json({
       status: 'success',
       data:doc
@@ -54,7 +55,7 @@ exports.getOne = (Model, popOptions) =>
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
     }
-
+    console.log(doc);
     res.status(200).json({
       status: 'success',
       data: {
@@ -69,7 +70,7 @@ exports.getAll = Model =>
     let filter = {};
     if (req.params.Id) {
       filter = { userId: req.params.Id};
-      console.log(filter);
+    
     }
     
     const features = new APIFeatures(Model.find(filter), req.query)
@@ -79,7 +80,7 @@ exports.getAll = Model =>
       .paginate();
     // const doc = await features.query.explain();
     const doc = await features.query;
-     console.log(doc);
+    console.log(doc);
     // SEND RESPONSE
     res.status(200).json({
       status: 'success',
@@ -96,7 +97,7 @@ exports.getAll = Model =>
     let filter = {};
     if (req.params.Id) {
       filter = { yearId : req.params.Id};
-      console.log(filter);
+      
     }
     
     const features = new APIFeatures(Model.find(filter), req.query)
@@ -106,7 +107,7 @@ exports.getAll = Model =>
       .paginate();
     // const doc = await features.query.explain();
     const doc = await features.query;
-     console.log(doc);
+    console.log(doc);
     // SEND RESPONSE
     res.status(200).json({
       status: 'success',
@@ -121,7 +122,7 @@ exports.getAll = Model =>
     let filter = {};
     if (req.params.Id) {
       filter = { classId : req.params.Id};
-      console.log(filter);
+     
     }
     
     const features = new APIFeatures(Model.find(filter), req.query)
@@ -131,7 +132,7 @@ exports.getAll = Model =>
       .paginate();
     // const doc = await features.query.explain();
     const doc = await features.query;
-     console.log(doc);
+    console.log(doc);
     // SEND RESPONSE
     res.status(200).json({
       status: 'success',
@@ -146,7 +147,7 @@ exports.getAll = Model =>
     let filter = {};
     if (req.params.Id) {
       filter = { classId : req.params.Id};
-      console.log(filter);
+     
     }
     
     const features = new APIFeatures(Model.find(filter), req.query)
@@ -156,7 +157,7 @@ exports.getAll = Model =>
       .paginate();
     // const doc = await features.query.explain();
     const doc = await features.query;
-     console.log(doc);
+    console.log(doc);
     // SEND RESPONSE
     res.status(200).json({
       status: 'success',

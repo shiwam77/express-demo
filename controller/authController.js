@@ -42,7 +42,10 @@ exports.signup = catchAsync(async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm
+    passwordConfirm: req.body.passwordConfirm,
+    user :req.body.user,
+    photo : req.body.photo,
+    userType:req.body.userType
   });
 
   const url = `${req.protocol}://${req.get('host')}/me`;
@@ -87,7 +90,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
-  } else if (req.cookies.jwt) {
+    } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
 
@@ -102,6 +105,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
+
   if (!currentUser) {
     return next(
       new AppError(
@@ -155,19 +159,34 @@ exports.isLoggedIn = async (req, res, next) => {
   next();
 };
 
+// exports.restrictTo = (...roles) => {
+//   return (req, res, next) => {
+//     // roles ['admin', 'lead-guide']. role='user'
+//     let include = false;
+//     for(var i = 0; i <= roles.length;i++){
+//       console.log(roles[i]);
+//        if(roles[i] === req.user.role){
+//         include = true;
+//          break;
+//        }
+//     }
+//     console.log(include);
+//     if (include === true) {
+//       return next(
+//         new AppError('You do not have permission to perform this action', 403)
+//       );
+//     }
+
+//     next();
+//   };
+// };
+
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
+    roles.forEach((role)=>console.log(role));
+ 
     // roles ['admin', 'lead-guide']. role='user'
-    let include = false;
-    for(var i = 0; i <= roles.length;i++){
-      console.log(roles[i]);
-       if(roles[i] === req.user.role){
-        include = true;
-         break;
-       }
-    }
-    console.log(include);
-    if (include === true) {
+    if (roles.includes(req.user.userType)) {
       return next(
         new AppError('You do not have permission to perform this action', 403)
       );

@@ -1,19 +1,54 @@
+
 const express = require('express');
 const userController = require('../controller/userController');
-const authController = require('../controller/authController')
-//const router = express().router();
+const yearController = require('../controller/yearController');
+const classController = require('../controller/classController');
+const subjectController = require('../controller/subjectController');
+const studentController = require('../controller/studentController');
+const authController = require('../controller/authController');
+const { Router } = require('express');
+const router = express.Router();
+ 
+
+router
+.route('/auth/v1/logout')
+.get(authController.logout);
+
+router
+.route('/auth/v1/signup')
+ .post(authController.signup);
+
+ router
+ .route('/auth/v1/login')
+  .post(authController.login);
+ 
+  router
+ .route('/auth/v1/forgotPassword')
+  .post(authController.forgotPassword);
+ 
+ router
+.route('/auth/v1/resetPassword')
+ .patch(authController.resetPassword);
 
 
-//router.post('/signup', authController.signup);
-// // router
-// // .route('/signup',authController.signup)
-// // .get()
-// // .post();
+ //by admin
+ router
+.route('/auth/v1/updateUser')
+ .patch(authController.protect,authController.restrictTo('user,admin'),userController.updateUser);
 
-// router
-// .route('/:id')
-// .get()
-// .patch()
-// .delete();
+ router
+ .route('/getAllUsers')
+ .get(authController.protect,authController.restrictTo('user,admin'),userController.getAllUsers);
+ 
+ router
+ .route('/auth/v1/deleteUser')
+  .delete(authController.protect,authController.restrictTo('user,admin'),userController.deleteUser);
 
-// module.exports = router;
+module.exports = router;
+
+
+
+
+
+
+

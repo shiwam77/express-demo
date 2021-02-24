@@ -45,6 +45,16 @@ const studentSchema = new mongoose.Schema(
         type:String,
         
     },
+    studentAsUserId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: [true, 'Please provide a User '],
+    
+    },
+    admissionNo: {
+        type:Number,
+        
+    },
     email: {
         type:String,
     },

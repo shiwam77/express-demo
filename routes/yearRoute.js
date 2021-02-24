@@ -11,20 +11,20 @@ const router = express.Router();
  
 
 router
-.route('/:Id/getAllSubjects')
-.get(authController.protect,authController.restrictTo('user,superAdmin'),subjectController.getAllSubject);
+.route('/:Id/getAllYears')
+.get(authController.protect,authController.restrictTo('user,superAdmin'),yearController.getAllYears);
 
 router
-.route('/createSubject')
- .post(authController.protect,authController.restrictTo('user,superAdmin'),subjectController.createSubject);
+.route('/createYear')
+ .post(authController.protect,authController.restrictTo('user,superAdmin'),yearController.createYear);
 
 
  router
-.route('/:Id/updateSubject')
- .patch(authController.protect,authController.restrictTo('user,superAdmin'),subjectController.createSubject);
+.route('/:Id/updateYear')
+ .patch(authController.protect,authController.restrictTo('user,superAdmin'),yearController.updateYear);
 
  router
- .route('/:Id/deleteSubject')
-  .delete(authController.protect,authController.restrictTo('user,superAdmin'),subjectController.deleteSubject);
+ .route('/:Id/deleteYear')
+  .delete(authController.protect,authController.restrictTo('user,superAdmin'),yearController.deleteYear);
 
 module.exports = router;

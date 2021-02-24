@@ -11,20 +11,20 @@ const router = express.Router();
  
 
 router
-.route('/:Id/getAllSubjects')
-.get(authController.protect,authController.restrictTo('user,superAdmin'),subjectController.getAllSubject);
+.route('/:Id/getAllStudents')
+.get(authController.protect,authController.restrictTo('user,superAdmin'),studentController.getAllStudent);
 
 router
-.route('/createSubject')
- .post(authController.protect,authController.restrictTo('user,superAdmin'),subjectController.createSubject);
+.route('/createStudent')
+ .post(authController.protect,authController.restrictTo('user,superAdmin'),studentController.createStudent);
 
 
  router
-.route('/:Id/updateSubject')
- .patch(authController.protect,authController.restrictTo('user,superAdmin'),subjectController.createSubject);
+.route('/:Id/updateStudent')
+ .patch(authController.protect,authController.restrictTo('user,superAdmin'),studentController.updateStudent);
 
  router
- .route('/:Id/deleteSubject')
-  .delete(authController.protect,authController.restrictTo('user,superAdmin'),subjectController.deleteSubject);
+ .route('/:Id/deleteStudent')
+  .delete(authController.protect,authController.restrictTo('user,superAdmin'),studentController.deleteStudent);
 
 module.exports = router;

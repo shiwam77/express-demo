@@ -25,6 +25,12 @@ const yearController = require('../express-demo/controller/yearController');
 const classController = require('../express-demo/controller/classController');
 const subjectController = require('../express-demo/controller/subjectController');
 const studentController = require('../express-demo/controller/studentController');
+const userRoute = require('../express-demo/routes/userRoutes');
+const subjectRoute = require('../express-demo/routes/subjectRoutes');
+const classRoute = require('../express-demo/routes/classRoute');
+const studentRoute = require('../express-demo/routes/studentsRoute');
+const yearRoute = require('../express-demo/routes/yearRoute');
+
 //const subRoutes = require('../express-demo/routes/subjectRoutes');
 const DB = process.env.DATABASE.replace(
     '<PASSWORD>',
@@ -134,6 +140,13 @@ const DB = process.env.DATABASE.replace(
       });
 
 
+      app.use(userRoute);
+      app.use(subjectRoute);
+      app.use(classRoute);
+      app.use(studentRoute);
+      app.use(yearRoute);
+      
+
 
 /////////////////////////User route //////////////////////////// 
 app.post('/auth/v1/signup', authController.signup);
@@ -143,49 +156,13 @@ app.get('/auth/v1/logout', authController.logout);
 app.post('/auth/v1/forgotPassword', authController.forgotPassword);
 app.patch('/auth/v1/resetPassword',authController.resetPassword);
 
+//by admin
+app.patch('/auth/v1/updateUser',userController.updateUser);
+
+app.delete('/auth/v1/deleteUser',authController.protect,authController.restrictTo('user,superAdmin'),userController.deleteUser);
+///////////////
 app.get('/getAllUsers',authController.protect,authController.restrictTo('user'),userController.getAllUsers);
- ///////////////////////////////////////////////
 
-
-////////////Year Route//////////////
-
-
-app.get('/:Id/getAllYears',authController.protect,authController.restrictTo('admin,user,superAdmin'),yearController.getAllYears);
-app.post('/createYear',authController.protect,authController.restrictTo('user,superAdmin'),yearController.createYear);
-app.patch('/:Id/updateYear',authController.protect,authController.restrictTo('user,superAdmin'),yearController.updateYear);
-app.delete('/:Id/deleteYear',authController.protect,authController.restrictTo('user,superAdmin'),yearController.deleteYear);
-
-
-/////////////////////////////////
-
-
-//////////Class Route
-app.get('/:Id/getAllClasses',authController.protect,authController.restrictTo('admin,user,superAdmin'),classController.getAllClass);
-app.post('/createClass',authController.protect,authController.restrictTo('user,superAdmin'),classController.createClass);
-app.patch('/:Id/updateClass',authController.protect,authController.restrictTo('user,superAdmin'),classController.updateClass);
-app.delete('/:Id/deleteClass',authController.protect,authController.restrictTo('user,superAdmin'),classController.deleteClass);
-
-//////////////////
-
-///Subject Route /////
-//subRoutes.subjectRoutes();
-app.get('/:Id/getAllSubjects',authController.protect,authController.restrictTo('user'),subjectController.getAllSubject);
-app.post('/createSubject',authController.protect,authController.restrictTo('user'),subjectController.createSubject);
-app.patch('/:Id/updateSubject',subjectController.updateSubject);
-app.delete('/:Id/deleteSubject',subjectController.deleteSubject);
-
-////////////////
-
-
-///////Students Route //////
-
-
-app.get('/:Id/getAllStudents',authController.protect,authController.restrictTo('user'),studentController.getAllStudent);
-app.post('/createStudent',authController.protect,authController.restrictTo('user'),studentController.createStudent);
-app.patch('/:Id/updateStudent',studentController.updateStudent);
-app.delete('/:Id/deleteStudent',studentController.deleteStudent);
-
-///////////
 
 app.all('*',(req,res,next) => {
  
