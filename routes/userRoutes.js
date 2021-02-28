@@ -33,16 +33,16 @@ router
 
  //by admin
  router
-.route('/auth/v1/updateUser')
- .patch(authController.protect,authController.restrictTo('user,admin'),userController.updateUser);
+.route('/:Id/updateUser')
+ .patch(authController.protect,authController.restrictTo('user,superAdmin'),userController.updateUser);
 
  router
  .route('/getAllUsers')
  .get(authController.protect,authController.restrictTo('user,admin'),userController.getAllUsers);
  
  router
- .route('/auth/v1/deleteUser')
-  .delete(authController.protect,authController.restrictTo('user,admin'),userController.deleteUser);
+ .route('/:Id/deleteUser')
+  .delete(authController.protect,authController.restrictTo('user,superAdmin'),userController.deleteUser);
 
 module.exports = router;
 

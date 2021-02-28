@@ -9,7 +9,7 @@ exports.deleteOne = Model =>
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
     }
-   console.log(doc);
+   console.log(doc + ".Deleted");
     res.status(204).json({
       status: 'success',
       message: "Documented is deleted"
@@ -18,6 +18,8 @@ exports.deleteOne = Model =>
 
 exports.updateOne = Model =>
   catchAsync(async (req, res, next) => {
+    console.log(req.params.Id);
+    console.log(req.body);
     const doc = await Model.findByIdAndUpdate(req.params.Id, req.body, {
       new: true,
       runValidators: true
@@ -26,7 +28,7 @@ exports.updateOne = Model =>
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
     }
-    console.log(doc);
+    console.log(doc + ".Updated");
 
     res.status(200).json({
       status: 'success',
@@ -35,6 +37,29 @@ exports.updateOne = Model =>
       }
     });
   });
+
+  exports.updateUser = Model =>
+  catchAsync(async (req, res, next) => {
+    console.log(req.params.Id);
+    console.log(req.body);
+    const doc = await Model.findByIdAndUpdate(req.params.Id, req.body, {
+      new: true,
+      runValidators: false
+    });
+
+    if (!doc) {
+      return next(new AppError('No document found with that ID', 404));
+    }
+    console.log(doc + ".Updated");
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: doc
+      }
+    });
+  });
+
 
 exports.createOne = Model =>
   catchAsync(async (req, res, next) => {

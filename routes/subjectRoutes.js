@@ -21,7 +21,7 @@ router
 
  router
 .route('/:Id/updateSubject')
- .patch(authController.protect,authController.restrictTo('user,superAdmin'),subjectController.createSubject);
+ .patch(authController.protect,authController.restrictTo('user,superAdmin'),subjectController.updateSubject);
 
  router
  .route('/:Id/deleteSubject')

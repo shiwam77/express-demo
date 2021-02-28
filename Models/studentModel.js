@@ -58,6 +58,12 @@ const studentSchema = new mongoose.Schema(
     email: {
         type:String,
     },
+    className: {
+        type:String,
+    },
+    batch: {
+        type:Number,
+    },
     password: {
         type: String,
         required: [true, 'Please provide a password'],
@@ -94,7 +100,7 @@ const studentSchema = new mongoose.Schema(
       select: true
     },
     classId: {
-        type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.ObjectId,
       ref: 'Class',
       required: [true, 'Please provide a Class'],
       select:false,

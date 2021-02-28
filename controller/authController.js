@@ -38,14 +38,22 @@ const createSendToken = (user, statusCode, req, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const newUser = await User.create({
+  const { email} = req.body;
+  var user =  await User.findOne({ email });
+    user = await User.findOne({ email });
+    if(user){
+      return next(new AppError('UserName is already taken!', 400));
+    }
+
+   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     user :req.body.user,
     photo : req.body.photo,
-    userType:req.body.userType
+    userType:req.body.userType,
+    parentsAsUser:req.body. parentsAsUser
   });
 
   const url = `${req.protocol}://${req.get('host')}/me`;
@@ -56,14 +64,15 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
-
+  const { email, password , parentsAsUser,userType} = req.body;
+  
   // 1) Check if email and password exist
-  if (!email || !password) {
-    return next(new AppError('Please provide email and password!', 400));
-  }
-  // 2) Check if user exists && password is correct
-  const user = await User.findOne({ email }).select('+password');
+    if (!email || !password) {
+      return next(new AppError('Please provide email and password!', 400));
+    }
+    // 2) Check if user exists && password is correct
+   const  user = await User.findOne({ email }).select('+password');
+
   console.log(user);
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
