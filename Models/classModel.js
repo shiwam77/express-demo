@@ -18,7 +18,7 @@ const classSchema = new mongoose.Schema(
     yearId: {
       type: mongoose.Schema.ObjectId,
       ref: 'Year',
-      required: [true, 'Please provide a User '],
+      required: [true, 'Please provide a year '],
       select:false,
     }
   },

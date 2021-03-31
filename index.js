@@ -21,22 +21,29 @@ const dotenv = require('dotenv');
 dotenv.config({path: '../express-demo/config.env'});
 const authController = require('../express-demo/controller/authController');
 const userController = require('../express-demo/controller/userController');
-const yearController = require('../express-demo/controller/yearController');
-const classController = require('../express-demo/controller/classController');
-const subjectController = require('../express-demo/controller/subjectController');
-const studentController = require('../express-demo/controller/studentController');
 const userRoute = require('../express-demo/routes/userRoutes');
 const subjectRoute = require('../express-demo/routes/subjectRoutes');
 const classRoute = require('../express-demo/routes/classRoute');
 const studentRoute = require('../express-demo/routes/studentsRoute');
 const yearRoute = require('../express-demo/routes/yearRoute');
+const homeTaskRoutes = require('../express-demo/routes/homeTaskRoutes');
+const tutorRoutes = require('../express-demo/routes/tutorRoutes');
+const attendanceRoutes = require('../express-demo/routes/attendanceRoute');
+
 
 //const subRoutes = require('../express-demo/routes/subjectRoutes');
-const DB = process.env.DATABASE.replace(
-    '<PASSWORD>',
-    process.env.DATABASE_PASSWORD
-    );
-
+var DB;
+  if(process.env.NODE_ENV === "production"){
+    console.log("listen to global database");
+       DB = process.env.DATABASE.replace(
+      '<PASSWORD>',
+      process.env.DATABASE_PASSWORD
+      );
+  }
+  else if(process.env.NODE_ENV === "development"){
+    console.log("listen to local database");
+     DB = "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false";
+  }
      mongoose.connect(DB,
       {
         useNewUrlParser : true,
@@ -58,8 +65,8 @@ const DB = process.env.DATABASE.replace(
 
       app.enable('trust proxy');
 
-     // app.set('view engine', 'pug');
-     // app.set('views', path.join(__dirname, 'views'));
+     app.set('view engine', 'pug');
+     app.set('views', path.join(__dirname, 'views'));
       
       // 1) GLOBAL MIDDLEWARES
       // Implement CORS
@@ -145,6 +152,9 @@ const DB = process.env.DATABASE.replace(
       app.use(classRoute);
       app.use(studentRoute);
       app.use(yearRoute);
+      app.use(tutorRoutes);
+      app.use(homeTaskRoutes);
+      app.use(attendanceRoutes);
       
 
 

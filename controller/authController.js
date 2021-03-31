@@ -6,6 +6,7 @@ const AppError = require('../utils/appError');
 const  Email= require('../utils/email');
 const crypto = require('crypto');
 const { promisify } = require('util');
+const userController = require('../controller/userController');
 
 
 
@@ -15,8 +16,9 @@ const signToken = id => {
   });
 };
 
-const createSendToken = (user, statusCode, req, res) => {
+const createSendToken = async (user, statusCode, req, res) => {
   const token = signToken(user._id);
+
 
   res.cookie('jwt', token, {
     expires: new Date(
